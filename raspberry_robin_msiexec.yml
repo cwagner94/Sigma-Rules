@@ -1,0 +1,33 @@
+title: Raspberry Robin Worm Exection
+id: 26ba7f87-ddd9-45c2-9a5c-93c49ee7eb18
+status: experimental
+description: Detects the Raspberry Robin worm attempting to execute using msiexec.exe and making a network connection over port 8080.
+references:
+    - https://redcanary.com/blog/threat-intelligence/raspberry-robin/
+    - https://redcanary.com/threat-detection-report/threats/raspberry-robin/
+author: Chris Wagner
+date: 2024/07/16
+modified: 2024/07/16
+tags:
+    - attack.defenseEvasion
+    - attack.1218.007
+logsource:
+    product: windows
+    category: windows-event-logs
+detection:
+    selection: 
+        ParentImage|endswith: '\cmd.exe'
+        Image|endswith: '\msiexec.exe'
+        CommandLine|contains: '8080'
+        CommandLine|contains|any:
+            - '/q'
+            - '-q'
+    condition: selection
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: medium

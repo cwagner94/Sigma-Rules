@@ -1,0 +1,36 @@
+title: Gootloader Process Injection
+id: 2ea4cd37-d7e0-4601-8964-63c75e7f535a
+status: experimental
+description: Detects Gootloaders process injection behavior when cscript.exe or wscript.exe spawns powershell.exe and reflectively loads code into memory.
+references:
+    - https://thedfirreport.com/2024/02/26/seo-poisoning-to-domain-control-the-gootloader-saga-continues/
+    - https://thedfirreport.com/2022/05/09/seo-poisoning-a-gootloader-story/
+author: Chris Wagner
+date: 2024/07/16
+modified: 2024/07/16
+tags:
+    - attack.execution
+    - attack.t1059.001
+logsource:
+    product: windows
+    category: powershell
+detection:
+    selection: 
+        ParentImage|endswith|any:
+            - '\cscript.exe'
+            - '\wscript.exe'
+        ParentCmdline|contains|any:
+            - '.js'
+            - '.wsf'
+        Image|endswith: '\powershell.exe'
+        ImageCmdline|contains: 'powershell'
+        CommandLine|length: <= 14
+    condition: selection
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
