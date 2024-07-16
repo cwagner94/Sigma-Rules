@@ -1,0 +1,29 @@
+title: Certutil Decodes Base64 Encoded Commands
+id: fe3b1b96-e458-4b48-91d8-903b77231c65
+status: experimental
+description: Detects the Certutil utility being used to deobfuscate base64 encoded commands, which attackers often use to evade detection.
+references:
+    - n/a
+author: Chris Wagner
+date: 2024/07/16
+modified: 2024/07/16
+tags:
+    - attack.defenseEvasion
+    - attack.t1140
+logsource:
+    product: windows
+    category: windows_event_logs
+detection:
+    selection: 
+        CommandLine|contains: 'echo'
+        CommandLine|contains: 'certutil'
+        CommandLine|contains: '-decode'
+    condition: selection
+fields:
+    - CommandLine
+    - Image
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Legitimate uses of certutil decoding base64 encoded commands
+level: medium

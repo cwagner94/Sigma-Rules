@@ -1,0 +1,31 @@
+title: Powershell Cobalt Strike Beacon
+id: a35abefc-c7b3-42cc-84f9-ce31f820ecb1
+status: experimental
+description: Detects Powershell.exe executing a Cobalt Strike beacon.
+references:
+    - https://newtonpaul.com/analysing-fileless-malware-cobalt-strike-beacon/#Injecting_into_memory_with_PowerShell
+author: Chris Wagner
+date: 2024/02/04
+modified: 2024/07/13
+tags:
+    - attack.cobalt_strike
+    - attack.s0154
+logsource:
+    product: windows
+    category: powershell-classic
+detection:
+    selection:
+        Image|endswith: '\powershell.exe'
+        CommandLine|contains: Set-StrictMode -Version 2
+        CommandLine|contains: System.Runtime.InteropServices.Marshal
+        CommandLine|contains: [IntPtr]
+        CommandLine|contains: -bxor
+    condition: selection
+fields:
+    - CommandLine
+    - Image
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Legitimate powershell usage of System.Runtime.InteropServices.Marshal, Set-StrictMode and [IntPtr]
+level: high

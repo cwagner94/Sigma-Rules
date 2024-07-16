@@ -1,0 +1,32 @@
+title: Rundll32.exe Dumping Contents of Lsass.exe
+id: 016a7c3f-1872-4d80-a66c-d7c1783cdfc9
+status: experimental
+description: Detections Rundll32.exe being used to dump the contents of lsass.exe which contains credential and authetication information.
+references:
+    - n/a
+author: Chris Wagner
+date: 2024/07/15
+modified: 2024/07/15
+tags:
+    - attack.mitreTechnique
+    - attack.t1003.001
+logsource:
+    product: windows
+    category: windows_event_logs
+detection:
+    selection: 
+        Image|endswith: '\rundll32.exe'
+        CommandLine|contains:
+        - 'comsvcs.dll'
+        - 'MiniDump'
+        - 'lsass.exe'
+        - '.dmp'
+    condition: selection
+fields:
+    - CommandLine
+    - Image
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: critical
