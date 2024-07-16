@@ -16,10 +16,11 @@ logsource:
 detection:
     selection:
         Image|endswith: '\powershell.exe'
-        CommandLine|contains: Set-StrictMode -Version 2
-        CommandLine|contains: System.Runtime.InteropServices.Marshal
-        CommandLine|contains: [IntPtr]
-        CommandLine|contains: -bxor
+        CommandLine|contains|all:
+            - 'Set-StrictMode -Version 2'
+            - 'System.Runtime.InteropServices.Marshal'
+            - '[IntPtr]'
+            - '-bxor'
     condition: selection
 fields:
     - CommandLine

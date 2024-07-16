@@ -16,11 +16,11 @@ logsource:
 detection:
     selection: 
         Image|endswith: '\rundll32.exe'
-        CommandLine|contains:
-        - 'comsvcs.dll'
-        - 'MiniDump'
-        - 'lsass.exe'
-        - '.dmp'
+        CommandLine|contains|all:
+            - 'comsvcs.dll'
+            - 'MiniDump'
+            - 'lsass.exe'
+            - '.dmp'
     condition: selection
 fields:
     - CommandLine

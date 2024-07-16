@@ -1,0 +1,31 @@
+title: Conhost.exe Spawning Powershell.exe
+id: b84375c0-158e-4888-b25c-8807e366b2ec
+status: experimental
+description: Detects conhost.exe spawning powershell.exe and executing a script which obfuscates the use of IEX.
+references:
+    - n/a
+author: Chris Wagner
+date: 2024/07/16
+modified: 2024/07/16
+tags:
+    - attack.execution
+    - attack.t1059.001
+logsource:
+    product: windows
+    category: windows-event-logs
+detection:
+    selection: 
+        ParentImage|endswith: '\conhost.exe'
+        Image|endswith: '\powershell.exe'
+        ParentCmdline|contains|all: 
+            - 'foreach-object'
+            - '[char]([int]'
+    condition: selection
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high

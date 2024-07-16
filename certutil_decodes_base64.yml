@@ -15,9 +15,10 @@ logsource:
     category: windows_event_logs
 detection:
     selection: 
-        CommandLine|contains: 'echo'
-        CommandLine|contains: 'certutil'
-        CommandLine|contains: '-decode'
+        CommandLine|contains|all:
+            - 'echo'
+            - 'certutil'
+            - '-decode'
     condition: selection
 fields:
     - CommandLine

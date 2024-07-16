@@ -1,0 +1,31 @@
+title: Powershell Reflective Code Loading
+id: 8695a928-ac03-4dcc-8aa7-a8636e8985e8
+status: experimental
+description: Detects powershell.exe reflectively loading code into memory to run in a fileless state.
+references:
+    - n/a
+author: Chris Wagner
+date: 2024/07/16
+modified: 2024/07/16
+tags:
+    - attack.defenseEvasion
+    - attack.t1620
+logsource:
+    product: windows
+    category: powershell
+detection:
+    selection: 
+        Image|endswith: '\powershell.exe'
+        CommandLine|contains|all:
+            - '.AesCryptoServiceProvider'
+            - '.CreateDecryptor'
+            - 'Reflection.Assembly'
+    condition: selection
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: medium

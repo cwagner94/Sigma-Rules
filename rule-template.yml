@@ -1,0 +1,29 @@
+title: required
+id: required
+related: optional
+    - id: optional
+      type: optional
+status: experimental
+description: required
+references:
+    - required
+author: Chris Wagner
+date: YYYY/MM/DD
+modified: YYYY/MM/DD
+tags:
+    - attack.mitreTechnique
+    - attack.txxxx.xxx
+logsource:
+    product: required
+    category: required
+detection:
+    selection: required
+    condition: all of selection_*
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - required
+level: informational/low/medium/high/critical
