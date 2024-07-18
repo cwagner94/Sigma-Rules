@@ -12,7 +12,7 @@ tags:
     - attack.s0154
 logsource:
     product: windows
-    category: powershell-classic
+    category: process_creation
 detection:
     selection:
         Image|endswith: '\powershell.exe'

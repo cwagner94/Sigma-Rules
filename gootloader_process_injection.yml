@@ -13,7 +13,7 @@ tags:
     - attack.t1059.001
 logsource:
     product: windows
-    category: powershell
+    category: process_creation
 detection:
     selection: 
         ParentImage|endswith|any:

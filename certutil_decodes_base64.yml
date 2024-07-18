@@ -8,11 +8,11 @@ author: Chris Wagner
 date: 2024/07/16
 modified: 2024/07/16
 tags:
-    - attack.defenseEvasion
+    - attack.defense_evasion
     - attack.t1140
 logsource:
     product: windows
-    category: windows_event_logs
+    category: process_creation
 detection:
     selection: 
         CommandLine|contains|all:
