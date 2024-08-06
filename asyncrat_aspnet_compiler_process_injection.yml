@@ -1,0 +1,28 @@
+title: Async RAT Process Injection into aspnet_compiler.exe
+id: fd0a98a6-476e-4b61-afd0-1c4717e76aaf
+status: experimental
+description: Detects the AsyncRAT process injection technique of leveraging aspnet_compiler.exe
+references:
+    - https://www.trendmicro.com/en_us/research/23/l/analyzing-asyncrat-code-injection-into-aspnetcompiler-exe.html
+author: Chris Wagner
+date: 2024/08/06
+modified: 2024/08/06
+tags:
+    - attack.process_injection
+    - attack.t1055
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection: 
+        ParentImage|endswith: '\powershell.exe'
+        Image|endswith: '\aspnet_compiler.exe'
+    condition: all of selection_*
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Legitimate instances of Powershell invoking aspnet_compiler.exe
+level: medium
